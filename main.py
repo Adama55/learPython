@@ -60,3 +60,11 @@ text_list = texte_sans_ponctuation.split()
 mots = re.findall(r'\b\w+\b', texte.lower())
 mot_plus_utilise = Counter(mots).most_common(1)
 print("le mot le plus utilisé est :", mot_plus_utilise)
+
+########################"
+print("#########")
+pronoms = ['je', 'tu', 'il', 'elle', 'on', 'nous', 'vous', 'ils', 'elles', 'me', 'te', 'se', 'le', 'la', 'les', 'lui', 'leur', 'eux', 'y', 'en', 'moi', 'toi', 'soi', 'toi-même']
+mots = re.findall(r'\b\w+\b', texte.lower())
+mots_non_pronoms = [mot for mot in mots if mot not in pronoms]
+mot_plus_utilise_non_pronom = Counter(mots_non_pronoms).most_common(1)
+print("le mot le plus utilisé non pronoms est :", mot_plus_utilise_non_pronom)
