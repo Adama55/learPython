@@ -51,3 +51,8 @@ data ={ "nbr_pronom_le": compteur, "nbr_e":nbr_e}
 path = "rapport.json" #D:/ESTIAM/python_expert/tp_cours/rapport.json
 with open(path,'w') as file:
     json.dump(data, file)
+
+import re
+texte_sans_ponctuation = re.sub(r'[^\w\s]', '', texte)
+text_list = texte_sans_ponctuation.split()
+print(text_list)
