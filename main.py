@@ -43,7 +43,7 @@ print("le nombre de 'e' est :", nbr_e)
 
 #retirer tous les "e"
 texte_sans_e = texte.replace("e", " ")
-print(texte_sans_e)
+#print(texte_sans_e)
 
 import json
 
@@ -53,6 +53,10 @@ with open(path,'w') as file:
     json.dump(data, file)
 
 import re
+from collections import Counter
 texte_sans_ponctuation = re.sub(r'[^\w\s]', '', texte)
 text_list = texte_sans_ponctuation.split()
-print(text_list)
+#print(text_list)
+mots = re.findall(r'\b\w+\b', texte.lower())
+mot_plus_utilise = Counter(mots).most_common(1)
+print("le mot le plus utilisé est :", mot_plus_utilise)
