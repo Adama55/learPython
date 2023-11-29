@@ -54,15 +54,15 @@ my_text_cleaned = clean_text(texte)
 
 mesPronoms = ['je',"tu", 'il', "nous", "vous", "ils"]
 
-compteur = 0
+compteur_le = 0
 
 # Parcourez le tableau de mots pour trouver "le"
 for i in range(1, len(my_text_cleaned)):
     if my_text_cleaned[i] == "le" and  my_text_cleaned[i - 1].lower() in mesPronoms:
-        compteur += 1
+        compteur_le += 1
 
 # Affichez le résultat
-print("Le nombre 'le' est :", compteur)
+print("Le nombre 'le' est :", compteur_le)
 
 #3-b compter le nombre de e
 nbr_e = texte.count("e")
@@ -72,20 +72,15 @@ print("le nombre de 'e' est :", nbr_e)
 texte_sans_e = texte.replace("e", " ")
 #print(texte_sans_e)
 
-##4 ecrire le rapport dans le fichier json
-import json
-
-data ={ "nbr_pronom_le": compteur, "nbr_e":nbr_e}
-path = "rapport.json" #D:/ESTIAM/python_expert/tp_cours/rapport.json
-with open(path,'w') as file:
-    json.dump(data, file)
 
 ## 5 trouver le mot le plus utilisé
 import re
 from collections import Counter
-mots = re.findall(r'\b\w+\b', texte.lower())
-mot_plus_utilise = Counter(mots).most_common(1)
-print("le mot le plus utilisé est :", mot_plus_utilise)
+texte_list= re.sub(r'[^\w\s]', '', texte.lower()).split()
+temp = {mot: texte_list.count(mot) for mot in texte_list}
+#print(s)
+most_frequent_letters = [letter for letter, freq in temp.items() if freq == max(temp.values())]
+print(most_frequent_letters, "et leur nombre d'apparition est de :", max(temp.values()))
 
 ######### trouver le mot le plus utilisé sans pronoms
 print("#########")
@@ -94,3 +89,31 @@ mots = re.findall(r'\b\w+\b', texte.lower())
 mots_non_pronoms = [mot for mot in mots if mot not in pronoms]
 mot_plus_utilise_non_pronom = Counter(mots_non_pronoms).most_common(1)
 print("le mot le plus utilisé sans pronoms est :", mot_plus_utilise_non_pronom)
+
+######
+text = texte
+######
+def clean_text(text):
+    text = text.replace("\n", " ")
+    return text.split(" ")
+
+my_text_cleaned = clean_text(texte)
+articles = ['le',"la", 'les']
+mesPronoms = ['je',"tu", 'il', "nous", "vous", "ils"]
+pronoms = ['je', 'tu', 'il', 'elle', 'on', 'nous', 'vous', 'ils', 'elles', 'me', 'te', 'se', 'lui', 'leur', 'eux', 'y', 'en', 'moi', 'toi', 'soi', 'toi-même']
+compteur_pronoms = 0
+for i in range(1, len(my_text_cleaned)):
+    if my_text_cleaned[i] in articles  and  my_text_cleaned[i - 1].lower() in mesPronoms:
+        compteur_pronoms += 1
+    elif my_text_cleaned[i] in pronoms:
+        compteur_pronoms += 1
+        
+print("Le nombre de pronoms: ", compteur_pronoms)
+
+##4 ecrire le rapport dans le fichier json
+import json
+
+data ={ "nbr_pronom_le": compteur_le, "nbr_e":nbr_e, "nbr_total_pronoms":compteur_pronoms}
+path = "rapport.json" #D:/ESTIAM/python_expert/tp_cours/rapport.json
+with open(path,'w') as file:
+    json.dump(data, file)
