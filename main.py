@@ -46,7 +46,7 @@ Henri Michaux
 """
 
 # Fonction pour nettoyer le texte et le diviser en mots
-def nettoyer_et_diviser_texte(texte, ancien="l'", nouveau="l' "):
+def nettoyer_et_diviser_texte(texte, ancien="'", nouveau="' "):
     texte = texte.replace("\n", " ")
     texte = texte.replace(ancien, nouveau)
     return texte.split(" ")
